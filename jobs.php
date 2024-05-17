@@ -12,6 +12,7 @@
 </head>
 
 <?php require "includes/header.inc"
+      
 ?>
 
 <aside class="aside-below-position4">

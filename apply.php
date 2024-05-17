@@ -11,7 +11,14 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 
-<?php require "includes/header.inc" ?>
+<?php require "includes/header.inc"; 
+require_once ("settings.php");
+$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+
+if (!$conn) {
+  echo "<p>Database connection failure</p>";
+}  
+?>
 
 <main class="Apply-container">
   <section class="JobApply">
@@ -21,7 +28,7 @@
     <h1 class="ApplicationHeader">Employment Application</h1>
     <p>Fill the form below accurately indicating your potentials and suitability to job applying for.</p>
     <hr>
-    <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
+    <form action="processEOI.php" method="post" novalidate="novalidate">
       <fieldset>
         <legend>Personal Details</legend>
         <label for="JRnum" class="Textlabel">Job reference number</label>
@@ -111,4 +118,4 @@
     </form>
   </section>
 </main>
-<?php require "includes/footer.inc" ?>
+<?php require "includes/footer.inc"; ?>
