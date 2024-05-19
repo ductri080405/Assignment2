@@ -115,6 +115,7 @@ if (!$conn) {
             Skill1 VARCHAR(255),
             Skill2 VARCHAR(255),
             Skill3 VARCHAR(255),
+            Skill4 VARCHAR(255),
             OtherSkills TEXT,
             Status ENUM('New', 'Current', 'Final') DEFAULT 'New'
 )";
@@ -123,7 +124,7 @@ mysqli_query($conn, $create_table_query);
 
         $query = "insert into $sql_table (JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, OtherSkills)
          values('$jrnum', '$firstName', '$lastName','$streetAddress','$suburb',
-          '$state', '$postCode','$email','$phoneNum', '$skill1', '$skill2','$skill3', '$otherSkills')";
+          '$state', '$postCode','$email','$phoneNum', '$skill1', '$skill2','$skill3', '$skill4', '$otherSkills')";
         
           $result = mysqli_query($conn, $query);
 
