@@ -32,10 +32,10 @@ if (!$conn) {
         $skill4 = trim($_POST["skills4"]);
         $otherSkills = trim($_POST["otherSkills"]);
 
-        // if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($street) || empty($suburb) || empty($state) || empty($postcode)) {
-        //     echo "<p>Error: All fields are required.</p>";
-        //     exit();
-        //   }
+        if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
+            echo "<p>Error: All fields are required.</p>";
+            exit();
+          }
 
         
         // Validate input
@@ -64,11 +64,11 @@ if (!$conn) {
     
         }
 
-        // if (!in_array($gender, ['male', 'female', 'other'])) {
-        //     echo "<p>Error: Invalid gender.</p>";
-        //     exit();
+        // // if (!in_array($gender, ['male', 'female', 'other'])) {
+        // //     echo "<p>Error: Invalid gender.</p>";
+        // //     exit();
     
-        }
+        // }
 
         if (!preg_match("/^\d{8,12}$/", $phoneNum)) {
             echo "<p>Error: Invalid phone number.</p>";
