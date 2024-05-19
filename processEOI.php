@@ -24,7 +24,7 @@ if (!$conn) {
         $postCode = trim($_POST["postcode"]);
         $email = trim($_POST["email"]);
         $date_of_birth = trim($_POST["date"]);
-        $gender = trim($_POST["Gender"]);
+        // $gender = trim($_POST["Gender"]);
         $phoneNum = trim($_POST["phone"]);
         $skill1 = trim($_POST["skills1"]);
         $skill2 = trim($_POST["skills2"]);
@@ -32,7 +32,12 @@ if (!$conn) {
         $skill4 = trim($_POST["skills4"]);
         $otherSkills = trim($_POST["otherSkills"]);
 
-        if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
+        // if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
+        //     echo "<p>Error: All fields are required.</p>";
+        //     exit();
+        //   }
+
+        if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
             echo "<p>Error: All fields are required.</p>";
             exit();
           }
