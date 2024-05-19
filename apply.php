@@ -12,7 +12,7 @@
 </head>
 
 <?php require "includes/header.inc"; 
-require_once ("settings.php");
+include ("includes/settings.php");
 $conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 
 if (!$conn) {
