@@ -64,9 +64,9 @@ if (!$conn) {
     
         }
 
-        if (!in_array($gender, ['male', 'female', 'other'])) {
-            echo "<p>Error: Invalid gender.</p>";
-            exit();
+        // if (!in_array($gender, ['male', 'female', 'other'])) {
+        //     echo "<p>Error: Invalid gender.</p>";
+        //     exit();
     
         }
 
