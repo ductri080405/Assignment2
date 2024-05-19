@@ -24,6 +24,7 @@ if (!$conn) {
         $postCode = trim($_POST["postcode"]);
         $email = trim($_POST["email"]);
         $date_of_birth = trim($_POST["date"]);
+        $gender = trim($_POST["Gender"]);
         $phoneNum = trim($_POST["phone"]);
         $skill1 = trim($_POST["skills1"]);
         $skill2 = trim($_POST["skills2"]);
@@ -42,52 +43,60 @@ if (!$conn) {
         // used to search a string for a specific pattern and determine if the pattern exists
         // within the string. If the pattern is found, the function returns true; otherwise, it returns false.
     
-        if (!preg_match("/^[A-Za-z0-9]{5}$/", $job_ref)) {
+        if (!preg_match("/^[A-Za-z0-9]{5}$/", $jrnum)) {
             echo "<p>Error: Invalid job reference number.</p>";
+            exit();
         }
 
-        if (!preg_match("/^[A-Za-z]{1,20}$/", $first_name)) {
+        if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
             echo "<p>Error: Invalid first name.</p>";
+            exit();
         }
 
-        if (!preg_match("/^[A-Za-z]{1,20}$/", $last_name)) {
+        if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
             echo "<p>Error: Invalid last name.</p>";
+            exit();
         }
 
         if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $date_of_birth)) {
             echo "<p>Error: Invalid date of birth format.</p>";
+            exit();
     
         }
 
         if (!in_array($gender, ['male', 'female', 'other'])) {
             echo "<p>Error: Invalid gender.</p>";
+            exit();
     
         }
 
-        if (!preg_match("/^\d{8,12}$/", $phone)) {
+        if (!preg_match("/^\d{8,12}$/", $phoneNum)) {
             echo "<p>Error: Invalid phone number.</p>";
    
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "<p>Error: Invalid email address.</p>";
-    
+            exit();
         }
 
-        if (!preg_match("/^[A-Za-z0-9\s]{5,40}$/", $street)) {
+        if (!preg_match("/^[A-Za-z0-9\s]{5,40}$/", $streetAddress)) {
             echo "<p>Error: Invalid street address.</p>";
+            exit();
 
         }
 
         if (!preg_match("/^[A-Za-z\s]{5,40}$/", $suburb)) {
             echo "<p>Error: Invalid suburb/town.</p>";
+            exit();
         }
 
         if (!in_array($state, ['VIC', 'NSW', 'QLD', 'NT', 'WA', 'SA', 'TAS', 'ACT'])) {
             echo "<p>Error: Invalid state.</p>";
+            exit();
         }
 
-        if (!preg_match("/^\d{4}$/", $postcode)) {
+        if (!preg_match("/^\d{4}$/", $postCode)) {
             echo "<p>Error: Invalid postcode.</p>";
         }
 
