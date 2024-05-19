@@ -122,7 +122,7 @@ if (!$conn) {
 mysqli_query($conn, $create_table_query);
 
 
-        $query = "insert into $sql_table (JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, OtherSkills)
+        $query = "insert into $sql_table (JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, Skill4, OtherSkills)
          values('$jrnum', '$firstName', '$lastName','$streetAddress','$suburb',
           '$state', '$postCode','$email','$phoneNum', '$skill1', '$skill2','$skill3', '$skill4', '$otherSkills')";
         
