@@ -1,6 +1,7 @@
 <?php
 
-require_once ("settings.php");
+//require_once ("settings.php");
+include ("./settings.php");
 
 $conn = @mysqli_connect($host,
             $user,
@@ -22,16 +23,18 @@ if (!$conn) {
         $state = trim($_POST["state"]);
         $postCode = trim($_POST["postcode"]);
         $email = trim($_POST["email"]);
+        $date_of_birth = trim($_POST["date"]);
         $phoneNum = trim($_POST["phone"]);
         $skill1 = trim($_POST["skills1"]);
         $skill2 = trim($_POST["skills2"]);
         $skill3 = trim($_POST["skills3"]);
+        $skill4 = trim($_POST["skills4"]);
         $otherSkills = trim($_POST["otherSkills"]);
 
-        if (empty($job_ref) || empty($first_name) || empty($last_name) || empty($date_of_birth) || empty($gender) || empty($phone) || empty($email) || empty($street) || empty($suburb) || empty($state) || empty($postcode)) {
-            echo "<p>Error: All fields are required.</p>";
-            exit();
-          }
+        // if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($street) || empty($suburb) || empty($state) || empty($postcode)) {
+        //     echo "<p>Error: All fields are required.</p>";
+        //     exit();
+        //   }
 
         
         // Validate input
