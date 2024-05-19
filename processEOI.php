@@ -1,7 +1,7 @@
 <?php
 
 //require_once ("settings.php");
-include ("./settings.php");
+include ("includes/settings.php");
 
 $conn = @mysqli_connect($host,
             $user,
