@@ -106,7 +106,7 @@ if (!$conn) {
       </fieldset>
 
       <figure class="container">
-        <button class="Apply-btn">
+        <button name="Apply-btn" class="Apply-btn">
           <img src="./styles/image/button.svg" alt="Send Icon">
           <span>Submit Application</span>
         </button>

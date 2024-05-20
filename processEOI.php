@@ -1,146 +1,140 @@
 <?php
+  // 1. Check user clicked submit button on Login Form
+  if(isset($_POST['Apply-btn'])){
 
-//require_once ("settings.php");
-include ("includes/settings.php");
+  // 2. Call connection class: mysqli
+  require("includes/setting.php");
 
-$conn = @mysqli_connect($host,
-            $user,
-            $pwd,
-            $sql_db
-);
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
-if (!$conn) {
-    echo "<p>Database connection failure</p>";
-    }   else {
-    
-        $sql_table = "eoi";
-    
-        $jrnum = trim($_POST["JRnum"]);
-        $firstName = trim($_POST["First-Name"]);
-        $lastName = trim($_POST["Last-Name"]);
-        $streetAddress = trim($_POST["street"]);
-        $suburb = trim($_POST["suburb"]);
-        $state = trim($_POST["state"]);
-        $postCode = trim($_POST["postcode"]);
-        $email = trim($_POST["email"]);
-        $date_of_birth = trim($_POST["date"]);
-        // $gender = trim($_POST["Gender"]);
-        $phoneNum = trim($_POST["phone"]);
-        $skill1 = trim($_POST["skills1"]);
-        $skill2 = trim($_POST["skills2"]);
-        $skill3 = trim($_POST["skills3"]);
-        $skill4 = trim($_POST["skills4"]);
-        $otherSkills = trim($_POST["otherSkills"]);
 
-        // if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($gender) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
-        //     echo "<p>Error: All fields are required.</p>";
-        //     exit();
-        //   }
 
-        if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth) || empty($phoneNum) || empty($email) || empty($streetAddress) || empty($suburb) || empty($state) || empty($postCode)) {
-            echo "<p>Error: All fields are required.</p>";
+// 3. Test connection success or error: connect_error
+
+if($conn->connect_error) {
+  echo'<div class="alert alert-warning mt-3" role="alert">Connection Failed</div>';
+  die();
+} else {
+  echo '<div class="alert alert-success mt-3" role="alert">Connection Successful</div>';
+}
+// 4. Collect & store the POST data 
+        $jrnum = isset($_POST["JRnum"]);
+        $firstName = isset($_POST["First-Name"]);
+        $lastName = isset($_POST["Last-Name"]);
+        $date_of_birth = isset($_POST["date"]);
+        $gender = isset($_POST["Gender"]);
+        $phoneNum = isset($_POST["phone"]);
+        $email = isset($_POST["email"]);
+
+        $streetAddress = isset($_POST["street"]);
+        $suburb = isset($_POST["suburb"]);
+        $state = isset($_POST["state"]);
+        $postCode = isset($_POST["postcode"]);
+
+        $skill1 = isset($_POST["skills1"]);
+        $skill2 = isset($_POST["skills2"]);
+        $skill3 = isset($_POST["skills3"]);
+        $skill4 = isset($_POST["skills4"]);
+        $otherSkills = isset($_POST["otherSkills"]);
+
+ // 5. Check to see if fields are  blank
+
+        if (empty($jrnum) || empty($firstName) || empty($lastName) || empty($date_of_birth)|| empty($gender)|| empty ($phoneNum) || empty($email) || empty($streetAddress)|| empty($suburb) || empty($state) || empty($postCode) ) {
+            header("Location: ../apply.php?error=emptyfeilds");
+                echo "<p>Error: All fields are required.</p>";
             exit();
-          }
-
-        
-        // Validate input
-        // preg_match(pattern, subject, matches, flags, offset)
-        // used to search a string for a specific pattern and determine if the pattern exists
-        // within the string. If the pattern is found, the function returns true; otherwise, it returns false.
+        }
     
-        if (!preg_match("/^[A-Za-z0-9]{5}$/", $jrnum)) {
+    // Validate input
+    // preg_match(pattern, subject, matches, flags, offset)
+    // used to search a string for a specific pattern and determine if the pattern exists
+    // within the string. If the pattern is found, the function returns tr
+
+    if (!preg_match("/^[A-Za-z0-9]{5}$/", $jrnum)) {
+        header("Location: ../apply.php?error=invalidJRnum");
             echo "<p>Error: Invalid job reference number.</p>";
-            exit();
-        }
-
-        if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
+        exit();
+    }
+    if (!preg_match("/^[A-Za-z]{1,20}$/", $firstName)) {
+        header("Location: ../apply.php?error=invalidFirst-Name");
             echo "<p>Error: Invalid first name.</p>";
-            exit();
-        }
+        exit();
+    }
 
-        if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
-            echo "<p>Error: Invalid last name.</p>";
-            exit();
-        }
+    if (!preg_match("/^[A-Za-z]{1,20}$/", $lastName)) {
+        header("Location: ../apply.php?error=invalidLast-Name");
+        echo "<p>Error: Invalid last name.</p>";
+        exit();
+    }
 
-        if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $date_of_birth)) {
+    if (!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $date_of_birth)) {
+        header("Location: ../apply.php?error=invaliddate");
             echo "<p>Error: Invalid date of birth format.</p>";
-            exit();
-    
-        }
+        exit();
 
-        // // if (!in_array($gender, ['male', 'female', 'other'])) {
-        // //     echo "<p>Error: Invalid gender.</p>";
-        // //     exit();
-    
-        // }
+    }
+    $validGenders = array("Male", "Female", "Other");
+    if (!in_array($gender, $validGenders)) {
+        $errors[] = "Please select a valid gender.";
+    }
 
-        if (!preg_match("/^\d{8,12}$/", $phoneNum)) {
+
+    if (!preg_match("/^\d{8,12}$/", $phoneNum)) {
+        header("Location: ../apply.php?error=invalidphone");
             echo "<p>Error: Invalid phone number.</p>";
-   
-        }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        header("Location: ../apply.php?error=invaliduid&mail=" .$email);
             echo "<p>Error: Invalid email address.</p>";
-            exit();
-        }
+        exit();
+    }
 
-        if (!preg_match("/^[A-Za-z0-9\s]{5,40}$/", $streetAddress)) {
+    if (!preg_match("/^[A-Za-z0-9\s]{5,40}$/", $streetAddress)) {
+        header("Location: ../apply.php?error=invalidstreet=" );
             echo "<p>Error: Invalid street address.</p>";
-            exit();
+        exit();
 
-        }
+    }
 
-        if (!preg_match("/^[A-Za-z\s]{5,40}$/", $suburb)) {
+    if (!preg_match("/^[A-Za-z\s]{5,40}$/", $suburb)) {
+        header("Location: ../apply.php?error=invalidsuburb");
             echo "<p>Error: Invalid suburb/town.</p>";
-            exit();
-        }
+        exit();
+    }
 
-        if (!in_array($state, ['VIC', 'NSW', 'QLD', 'NT', 'WA', 'SA', 'TAS', 'ACT'])) {
+    if (!in_array($state, ['VIC', 'NSW', 'QLD', 'NT', 'WA', 'SA', 'TAS', 'ACT'])) {
+        header("Location: ../apply.php?error=invalidstate=" );
             echo "<p>Error: Invalid state.</p>";
-            exit();
-        }
+        exit();
+    }
 
-        if (!preg_match("/^\d{4}$/", $postCode)) {
+    if (!preg_match("/^\d{4}$/", $postCode)) {
+        header("Location: ../apply.php?error=invalidpostcode=" );
             echo "<p>Error: Invalid postcode.</p>";
-        }
+    }
 
-        // Create table if not exists
-        $create_table_query = "
-            EOInumber INT AUTO_INCREMENT PRIMARY KEY,
-            JobReferenceNumber VARCHAR(255),
-            FirstName VARCHAR(255),
-            LastName VARCHAR(255),
-            StreetAddress VARCHAR(255),
-            SuburbTown VARCHAR(255),
-            State VARCHAR(255),
-            Postcode VARCHAR(255),
-            EmailAddress VARCHAR(255),
-            PhoneNumber VARCHAR(255),
-            Skill1 VARCHAR(255),
-            Skill2 VARCHAR(255),
-            Skill3 VARCHAR(255),
-            Skill4 VARCHAR(255),
-            OtherSkills TEXT,
-            Status ENUM('New', 'Current', 'Final') DEFAULT 'New'
-)";
-mysqli_query($conn, $create_table_query);
+  // 1. Prepare Stament
+  $sql = "insert into applicant (JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, Skill4, OtherSkills)
+  values('$jrnum', '$firstName', '$lastName','$streetAddress','$suburb',
+   '$state', '$postCode','$email','$phoneNum', '$skill1', '$skill2','$skill3', '$skill4', '$otherSkills')";
+ 
+   $result = mysqli_query($conn, $sql);
+
+   if(!$result) {
+    echo "<p>Error: Could not process your application.</p>";
+}   else {
+    $EOInumber = mysqli_insert_id($conn);
+    // Assume Success/ Redrict On Success   
+
+        header("Location: ../apply.php?post=success"); 
+        exit();
+    echo "<p>Thank you for your application. Your EOI number is: $EOInumber</p>";
+}
 
 
-        $query = "insert into $sql_table (JobReferenceNumber, FirstName, LastName, StreetAddress, SuburbTown, State, Postcode, EmailAddress, PhoneNumber, Skill1, Skill2, Skill3, Skill4, OtherSkills)
-         values('$jrnum', '$firstName', '$lastName','$streetAddress','$suburb',
-          '$state', '$postCode','$email','$phoneNum', '$skill1', '$skill2','$skill3', '$skill4', '$otherSkills')";
-        
-          $result = mysqli_query($conn, $query);
 
-          if(!$result) {
-              echo "<p>Error: Could not process your application.</p>";
-          }   else {
-              $EOInumber = mysqli_insert_id($conn);
-              echo "<p>Thank you for your application. Your EOI number is: $EOInumber</p>";
-          }
-  
-          mysqli_close($conn);
-        }
 
-?>
+
+}
