@@ -3,7 +3,7 @@
   if(isset($_POST['Apply-btn'])){
 
   // 2. Call connection class: mysqli
-  require("includes/setting.php");
+  require("includes/settings.php");
 
 $conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
